@@ -80,6 +80,8 @@ metadata:
   name: k8s-annotation-validator
 webhooks:
 - name: k8s-annotation-validator.default.svc
+  sideEffects: None
+  admissionReviewVersions: ["v1"]
   clientConfig:
     caBundle: "Ci0tLS0tQk...<base64-encoded PEM bundle containing the CA that signed the webhook's serving certificate>...tLS0K"
     service:
@@ -98,7 +100,6 @@ webhooks:
       apiVersions: ["v1"]
       resources: ["deployments"]
       scope: "Namespaced"
-  ...
 ```
 
 Example namespace annotation:
