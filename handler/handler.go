@@ -33,10 +33,10 @@ func Handler(req v1.AdmissionRequest) (resp *v1.AdmissionResponse) {
 	}
 
 	metaAnnotations := meta.GetAnnotations()
-	annotaionKeys := annotations.GetAnnotationKeys()
+	annotationKeys := annotations.GetAnnotationKeys()
 
 	// Validate each annotation we expect
-	for _, k := range annotaionKeys {
+	for _, k := range annotationKeys {
 		v := metaAnnotations[k]
 		if strings.TrimSpace(v) == "" {
 			addFailure(resp, k, metav1.CauseTypeFieldValueRequired, "missing annotation")
