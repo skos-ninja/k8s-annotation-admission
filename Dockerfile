@@ -23,7 +23,10 @@ RUN apk --no-cache add tzdata
 # Alpine doesn't include cert auth certificates
 RUN apk --no-cache add ca-certificates
 
-WORKDIR /root/
+RUN addgroup -S appgroup
+RUN adduser -S -D -H -h /app appuser -G appgroup
+USER appuser
+WORKDIR /app/
 
 COPY --from=builder /app/main .
 
