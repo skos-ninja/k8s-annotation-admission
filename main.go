@@ -28,6 +28,8 @@ var cmd = &cobra.Command{
 func init() {
 	viper.AutomaticEnv()
 	viper.SetConfigFile("config.yaml")
+	viper.AddConfigPath("/etc/config/")
+	viper.AddConfigPath(".")
 
 	cmd.Flags().IntP("port", "p", 8080, "Specify port to run server on")
 	viper.BindPFlag("port", cmd.Flags().Lookup("port"))
