@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"fmt"
 	"net/http"
 	"time"
@@ -61,6 +62,21 @@ func runE(cmd *cobra.Command, args []string) error {
 		Addr:         fmt.Sprintf(":%v", port),
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
+	}
+
+	tlsCert := viper.GetString("tls-cert")
+	tlsKey := viper.GetString("tls-key")
+	if tlsCert != "" && tlsKey != "" {
+		sCert, err := tls.LoadX509KeyPair(tlsCert, tlsKey)
+		if err != nil {
+			return err
+		}
+		server.TLSConfig = &tls.Config{
+			Certificates: []tls.Certificate{sCert},
+		}
+
+		klog.Info("Listening on tls :", port)
+		return server.ListenAndServeTLS("", "")
 	}
 
 	klog.Info("Listening on :", port)
