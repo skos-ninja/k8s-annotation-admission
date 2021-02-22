@@ -75,16 +75,20 @@ func convertToUnstructured(req *v1.AdmissionRequest) (*unstructured.Unstructured
 }
 
 func addFailure(resp *v1.AdmissionResponse, key string, causeType metav1.CauseType, message string) {
-	resp.Allowed = false
-	if resp.Result.Details == nil {
-		resp.Result.Details = &metav1.StatusDetails{}
-	}
+	if annotations.IsWarningMode() {
+		resp.Warnings = append(resp.Warnings, fmt.Sprintf(".annotations.\"%s\": %s", key, message))
+	} else {
+		resp.Allowed = false
+		if resp.Result.Details == nil {
+			resp.Result.Details = &metav1.StatusDetails{}
+		}
 
-	cause := metav1.StatusCause{
-		Type:    causeType,
-		Message: message,
-		Field:   fmt.Sprintf("items[0].annotations.%s", key),
-	}
+		cause := metav1.StatusCause{
+			Type:    causeType,
+			Message: message,
+			Field:   fmt.Sprintf(".annotations.\"%s\"", key),
+		}
 
-	resp.Result.Details.Causes = append(resp.Result.Details.Causes, cause)
+		resp.Result.Details.Causes = append(resp.Result.Details.Causes, cause)
+	}
 }

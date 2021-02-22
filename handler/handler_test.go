@@ -55,6 +55,22 @@ func Test_MissingAnnotation(t *testing.T) {
 	assert.Equal(false, resp.Allowed, "Expected rejection")
 }
 
+func Test_WarningAnnotation(t *testing.T) {
+	assert := assert.New(t)
+	viper.Set(annotations.FlagWarning, true)
+	setupAnnotations(map[string]string{
+		"test": "w.*",
+	})
+
+	req := buildRequest(t, args{
+		"test": "valid",
+	})
+	resp := Handler(req)
+
+	assert.Equal(true, resp.Allowed, "Expected accepted")
+	assert.Equal(".annotations.\"test\": test does not match regex expression w.*", resp.Warnings[0])
+}
+
 func setupAnnotations(args map[string]string) {
 	viper.Set(annotations.FlagKey, args)
 	annotations.InitValidations()

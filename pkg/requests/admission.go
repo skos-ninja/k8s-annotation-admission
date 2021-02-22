@@ -64,6 +64,12 @@ func handler(fn admitFunc) http.HandlerFunc {
 		// The UID have to match
 		resp.Response.UID = req.Request.UID
 
+		if resp.Response.Result.Details != nil {
+			resp.Response.Result.Details.Name = req.Request.Name
+			resp.Response.Result.Details.Kind = req.Request.Kind.Kind
+			resp.Response.Result.Details.Group = req.Request.Kind.Group
+		}
+
 		if !resp.Response.Allowed {
 			klog.Warning("Validation response: ", resp.Response)
 		} else {

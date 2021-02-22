@@ -41,6 +41,9 @@ func init() {
 	cmd.Flags().StringP("tls-key", "k", "", "Specify TLS key")
 	viper.BindPFlag("tls-key", cmd.Flags().Lookup("tls-key"))
 
+	cmd.Flags().BoolP(annotations.FlagWarning, "w", false, "Only warn on a failed validation")
+	viper.BindPFlag(annotations.FlagWarning, cmd.Flags().Lookup(annotations.FlagWarning))
+
 	cmd.Flags().StringP(annotations.FlagKey, "a", "{}", "Specify annotations")
 	viper.BindPFlag(annotations.FlagKey, cmd.Flags().Lookup(annotations.FlagKey))
 

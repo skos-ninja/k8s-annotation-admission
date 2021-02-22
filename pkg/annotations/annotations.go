@@ -8,10 +8,17 @@ import (
 	"k8s.io/klog/v2"
 )
 
-// FlagKey is the key of the flag for the annotations map
-const FlagKey = "annotations"
+const (
+	// FlagKey is the key of the flag for the annotations map
+	FlagKey = "annotations"
+	// FlagWarning is the key of the flag for the validator to run in warning only mode
+	FlagWarning = "warning"
+)
 
-var annotationsCache = make(map[string]*regexp.Regexp)
+var (
+	annotationsCache = make(map[string]*regexp.Regexp)
+	warningMode      = false
+)
 
 func getExpr(name string) *regexp.Regexp {
 	value, ok := annotationsCache[name]
@@ -24,6 +31,7 @@ func getExpr(name string) *regexp.Regexp {
 
 // InitValidations performs a regex compil check on all annotations
 func InitValidations() {
+	warningMode = viper.GetBool(FlagWarning)
 	annotations := viper.GetStringMapString(FlagKey)
 	klog.Infof("Validating %d annotations...\n", len(annotations))
 	for k, v := range annotations {
@@ -53,4 +61,9 @@ func GetAnnotationKeys() []string {
 	}
 
 	return keys
+}
+
+// IsWarningMode returns if the validators are set to only run in warning mode
+func IsWarningMode() bool {
+	return warningMode
 }
