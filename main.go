@@ -35,10 +35,10 @@ func init() {
 	cmd.Flags().IntP("port", "p", 8080, "Specify port to run server on")
 	viper.BindPFlag("port", cmd.Flags().Lookup("port"))
 
-	cmd.Flags().StringP("tls-cert", "c", "", "Specify TLS certificate")
+	cmd.Flags().StringP("tls-cert", "c", "", "Specify TLS certificate path")
 	viper.BindPFlag("tls-cert", cmd.Flags().Lookup("tls-cert"))
 
-	cmd.Flags().StringP("tls-key", "k", "", "Specify TLS key")
+	cmd.Flags().StringP("tls-key", "k", "", "Specify TLS key path")
 	viper.BindPFlag("tls-key", cmd.Flags().Lookup("tls-key"))
 
 	cmd.Flags().BoolP(annotations.FlagWarning, "w", false, "Only warn on a failed validation")

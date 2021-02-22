@@ -17,8 +17,8 @@ The configuration options for the application are as follows:
 ```
   -a, --annotations map[string]string   Specify annotations (default "")
   -p, --port int             Specify port to run server on (default 8080)
-  -c, --tls-cert string      Specify TLS certificate
-  -k, --tls-key string       Specify TLS key
+  -c, --tls-cert string      Specify TLS certificate path
+  -k, --tls-key string       Specify TLS key path
   -w, --warning              Only warn on a failed validation
 ```
 
