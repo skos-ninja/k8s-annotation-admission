@@ -17,7 +17,7 @@ type args = map[string]string
 
 func Test_ValidAnnotation(t *testing.T) {
 	assert := assert.New(t)
-	viper.Set(annotations.FlagKey, map[string]string{
+	setupAnnotations(map[string]string{
 		"test": ".*",
 	})
 
@@ -31,7 +31,7 @@ func Test_ValidAnnotation(t *testing.T) {
 
 func Test_InvalidAnnotation(t *testing.T) {
 	assert := assert.New(t)
-	viper.Set(annotations.FlagKey, map[string]string{
+	setupAnnotations(map[string]string{
 		"test": "w.*",
 	})
 
@@ -45,7 +45,7 @@ func Test_InvalidAnnotation(t *testing.T) {
 
 func Test_MissingAnnotation(t *testing.T) {
 	assert := assert.New(t)
-	viper.Set(annotations.FlagKey, map[string]string{
+	setupAnnotations(map[string]string{
 		"test": ".*",
 	})
 
@@ -53,6 +53,11 @@ func Test_MissingAnnotation(t *testing.T) {
 	resp := Handler(req)
 
 	assert.Equal(false, resp.Allowed, "Expected rejection")
+}
+
+func setupAnnotations(args map[string]string) {
+	viper.Set(annotations.FlagKey, args)
+	annotations.InitValidations()
 }
 
 func buildRequest(t *testing.T, arg args) v1.AdmissionRequest {
