@@ -8,7 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"k8s.io/klog"
+	"k8s.io/klog/v2"
 
 	"github.com/skos-ninja/k8s-annotation-admission/handler"
 	"github.com/skos-ninja/k8s-annotation-admission/pkg/annotations"

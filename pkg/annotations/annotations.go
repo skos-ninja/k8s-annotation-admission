@@ -5,7 +5,7 @@ import (
 	"regexp"
 
 	"github.com/spf13/viper"
-	"k8s.io/klog"
+	"k8s.io/klog/v2"
 )
 
 // FlagKey is the key of the flag for the annotations map

@@ -9,7 +9,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/serializer"
-	"k8s.io/klog"
+	"k8s.io/klog/v2"
 )
 
 var (
@@ -64,11 +64,11 @@ func handler(fn admitFunc) http.HandlerFunc {
 		// The UID have to match
 		resp.Response.UID = req.Request.UID
 
-		var level klog.Level = 0
 		if !resp.Response.Allowed {
-			level = 2
+			klog.Warning("Validation response: ", resp.Response)
+		} else {
+			klog.Info("Validation response: ", resp.Response)
 		}
-		klog.V(level).Info("Validation response: ", resp.Response)
 
 		respBytes, err := json.Marshal(resp)
 		if err != nil {
