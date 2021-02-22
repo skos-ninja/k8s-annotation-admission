@@ -7,6 +7,23 @@ Annotations are provided to the application via a configuration parameter called
 
 This application is available as a docker image from [dockerhub](https://hub.docker.com/r/skos/k8s-annotation-admission).
 
+## Known limitations
+- Currently the warning mode of the validation hook requires you to have at least 1.19 in both the server or the client in order for the warnings to be displayed.
+- There's no way to limit annotations to specific resources. It's intended for you to deploy a new instance of the application per resource and then to add the hook to the existing `ValidatingWebhookConfiguration`.
+- The hook allows you to run in non TLS mode however k8s mandates that all hooks must use TLS in order to be called.
+
+## Configuration
+The configuration options for the application are as follows:
+```
+  -a, --annotations map[string]string   Specify annotations (default "")
+  -p, --port int             Specify port to run server on (default 8080)
+  -c, --tls-cert string      Specify TLS certificate
+  -k, --tls-key string       Specify TLS key
+  -w, --warning              Only warn on a failed validation
+```
+
+These can be provided both as a flag for the command or via the yaml configuration that accepts the long form of the flag as the key.
+
 ## Usage
 Below is an example deployment of the annotation validator that will ensure that all `Deployment` resources in the `test` namespace have any value in the annotation `test.skos.ninja`.
 
