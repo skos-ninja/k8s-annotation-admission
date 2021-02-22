@@ -8,7 +8,7 @@ Annotations are provided to the application via a configuration parameter called
 This application is available as a docker image from [dockerhub](https://hub.docker.com/r/skos/k8s-annotation-admission).
 
 ## Known limitations
-- Currently the warning mode of the validation hook requires you to have at least 1.19 in both the server or the client in order for the warnings to be displayed.
+- Currently the warning mode of the validation hook requires you to have at least 1.19 in both the server and the client in order for the warnings to be displayed.
 - There's no way to limit annotations to specific resources. It's intended for you to deploy a new instance of the application per resource and then to add the hook to the existing `ValidatingWebhookConfiguration`.
 - The hook allows you to run in non TLS mode however k8s mandates that all hooks must use TLS in order to be called.
 
