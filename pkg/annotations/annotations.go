@@ -8,6 +8,7 @@ import (
 	"k8s.io/klog"
 )
 
+// FlagKey is the key of the flag for the annotations map
 const FlagKey = "annotations"
 
 var annotationsCache = make(map[string]*regexp.Regexp)
